@@ -2,15 +2,16 @@
 
 namespace Modules\Appointment\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
+use Modules\Appointment\Nova\Resources\Meeting;
 
 class AppointmentServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'appointment-module';
+    protected $moduleName = 'Appointment';
 
     /**
      * @var string $moduleNameLower
@@ -28,6 +29,11 @@ class AppointmentServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+
+        \Nova::resources([
+            Meeting::class,
+        ]);
     }
 
     /**

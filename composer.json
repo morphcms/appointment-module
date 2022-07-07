@@ -20,5 +20,8 @@
         "psr-4": {
             "Modules\\Appointment\\": ""
         }
+    },
+    "require": {
+        "wdelfuego/nova-calendar": "^v1.3.2"
     }
 }
