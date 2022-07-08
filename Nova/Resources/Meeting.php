@@ -34,17 +34,18 @@ class Meeting extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title'),
-            Textarea::make('Notes')
-                ->rows(2)
 
-            ,
+            Text::make('Title'),
+
+            Textarea::make('Notes')
+                ->rows(2),
+
             DateTime::make('Starts At')
-                ->rules(['required'])
-            ,
+                ->rules(['required', 'after:yesterday']),
+
             DateTime::make('Ends At')
-                ->rules(['gte:starts_at'])
-            ,
+                ->rules(['after_or_equal:starts_at']),
+
             Select::make('Status')
                 ->options(MeetingStatus::options(true))
                 ->onlyOnForms()
@@ -54,6 +55,7 @@ class Meeting extends Resource
                 ->displayUsing(fn() => MeetingStatus::from($this->status)->value)
                 ->map(MeetingStatus::getNovaBadgeColors())
                 ->exceptOnForms(),
+
             BelongsTo::make('User', 'user', User::class),
         ];
     }
