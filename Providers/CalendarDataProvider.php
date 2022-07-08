@@ -3,6 +3,7 @@
 namespace Modules\Appointment\Providers;
 
 use App\Nova\User;
+use Modules\Appointment\Enum\MeetingStatus;
 use Modules\Appointment\Nova\Resources\Meeting;
 use Wdelfuego\NovaCalendar\DataProvider\MonthCalendar;
 use Wdelfuego\NovaCalendar\Event;
@@ -29,7 +30,7 @@ class CalendarDataProvider extends MonthCalendar
     // See https://github.com/wdelfuego/nova-calendar to find out
     // how to customize the way the events are displayed
     //
-    public function novaResources() : array
+    public function novaResources(): array
     {
         return [
 
@@ -37,20 +38,67 @@ class CalendarDataProvider extends MonthCalendar
             User::class => 'created_at',
 
             // Events with an ending timestamp can be multi-day events:
-             Meeting::class => ['starts_at', 'ends_at'],
+            Meeting::class => ['starts_at', 'ends_at'],
         ];
     }
 
-    // Use this method to show events on the calendar that don't
-    // come from a Nova resource. Just return an array of dynamically
-    // generated events.
-    protected function nonNovaEvents() : array
+//    // Use this method to show events on the calendar that don't
+//    // come from a Nova resource. Just return an array of dynamically
+//    // generated events.
+//    protected function nonNovaEvents() : array
+//    {
+//        return [
+//            (new Event("Today until tomorrow", now(), now()->addDays(1)))
+//                ->displayTime()
+//                ->addBadges('👍')
+//                ->withNotes('these are the event notes')
+//        ];
+//    }
+//
+    public function eventStyles(): array
     {
         return [
-            (new Event("Today until tomorrow", now(), now()->addDays(1)))
-                ->displayTime()
-                ->addBadges('👍')
-                ->withNotes('these are the event notes')
+            'warning' => [
+                'background-color' => 'rgb(253 224 71)',
+                'color' => 'rgb(133 77 14)',
+            ],
+
+            'danger' => [
+                'background-color' => 'rgb(248 113 113)',
+//                'color' => 'rgb(127 29 29)',
+            ],
+
+            'info' => [
+                'background-color' => 'rgb(2 132 199)',
+//                'color' => 'rgb(12 74 110)',
+            ],
+
+            'success' => [
+                'background-color' => 'rgb(34 197 94)',
+                'color' => 'rgb(20 83 45)',
+            ],
         ];
+    }
+
+    protected function customizeEvent(Event $event): Event
+    {
+        $event->displayTime();
+
+        // TODO: Maybe a better approach to use switch case
+        if ($event->hasNovaResource(Meeting::class)) {
+            if ($event->model()->hasStatus(MeetingStatus::Approved)) {
+                $event->addStyle('warning');
+            } else if ($event->model()->hasStatus(MeetingStatus::Rejected)) {
+                $event->addStyle('danger');
+            } else if ($event->model()->hasStatus(MeetingStatus::Rescheduled)) {
+                $event->addStyle('warning');
+            } else if ($event->model()->hasStatus(MeetingStatus::Pending)) {
+                $event->addStyle('info');
+            } else if ($event->model()->hasStatus(MeetingStatus::Completed)) {
+                $event->addStyle('success');
+            }
+        }
+
+        return $event;
     }
 }

@@ -13,6 +13,8 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Modules\Appointment\Enum\MeetingStatus;
+use Modules\Morphling\Nova\Actions\UpdateStatus;
+use Modules\Morphling\Nova\Filters\ByStatus;
 
 class Meeting extends Resource
 {
@@ -46,10 +48,10 @@ class Meeting extends Resource
             DateTime::make('Ends At')
                 ->rules(['after_or_equal:starts_at']),
 
-            Select::make('Status')
-                ->options(MeetingStatus::options(true))
-                ->onlyOnForms()
-                ->displayUsingLabels(),
+//            Select::make('Status')
+//                ->options(MeetingStatus::options(true))
+//                ->onlyOnForms()
+//                ->displayUsingLabels(),
 
             Badge::make('Status')
                 ->displayUsing(fn() => MeetingStatus::from($this->status)->value)
@@ -57,6 +59,20 @@ class Meeting extends Resource
                 ->exceptOnForms(),
 
             BelongsTo::make('User', 'user', User::class),
+        ];
+    }
+
+    public function actions(NovaRequest $request): array
+    {
+        return [
+            UpdateStatus::make(MeetingStatus::class),
+        ];
+    }
+
+    public function filters(NovaRequest $request): array
+    {
+        return [
+            ByStatus::make(MeetingStatus::class),
         ];
     }
 }

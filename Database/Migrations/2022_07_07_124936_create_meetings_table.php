@@ -20,9 +20,9 @@ return new class extends Migration
             $table->dateTime('starts_at');
             $table->dateTime('ends_at')->nullable();
             $table->text('notes')->nullable();
-            $table->string('status')->default(MeetingStatus::Pending);
+            $table->string('status')->default(MeetingStatus::Pending->value);
             $table->string('title')->nullable();
-            $table->string('uuid')->unique();
+            $table->string('uuid')->unique()->nullable();
             $table->foreignIdFor(User::class);
 
             $table->timestamps();
