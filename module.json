@@ -5,8 +5,7 @@
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\Appointment\\Providers\\AppointmentServiceProvider",
-        "Modules\\Appointment\\Providers\\EventServiceProvider"
+        "Modules\\Appointment\\Providers\\AppointmentServiceProvider"
     ],
     "aliases": {},
     "files": [],

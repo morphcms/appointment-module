@@ -12,19 +12,18 @@ use Modules\Appointment\Listeners\NotifyUsersIfMeetingApproved;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingCompleted;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingRejected;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingRescheduled;
-use Modules\Appointment\Listeners\NotifyUsersOfAMeetingCreate;
-use Modules\Appointment\Listeners\NotifyUsersOfAMeetingUpdate;
-use Nwidart\Modules\Facades\Module;
+use Modules\Appointment\Listeners\NotifyUsersOfAMeetingCreated;
+use Modules\Appointment\Listeners\NotifyUsersOfAMeetingUpdated;
 
 class EventServiceProvider extends ServiceProvider
 {
 
     protected $listen = [
         MeetingCreated::class => [
-            NotifyUsersOfAMeetingCreate::class,
+            NotifyUsersOfAMeetingCreated::class,
         ],
         MeetingUpdated::class => [
-            NotifyUsersOfAMeetingUpdate::class,
+            NotifyUsersOfAMeetingUpdated::class,
         ],
         MeetingApproved::class => [
             NotifyUsersIfMeetingApproved::class,
@@ -39,28 +38,5 @@ class EventServiceProvider extends ServiceProvider
             NotifyUsersIfMeetingRescheduled::class,
         ],
     ];
-
-    // TODO: Register all events and listeners automatically
-//    /**
-//     * Determine if events and listeners should be automatically discovered.
-//     *
-//     * @return bool
-//     */
-//    public function shouldDiscoverEvents()
-//    {
-//        return true;
-//    }
-//
-//    /**
-//     * Get the listener directories that should be used to discover events.
-//     *
-//     * @return array
-//     */
-//    protected function discoverEventsWithin()
-//    {
-//        return [
-//            Module::getModulePath('appointment') . 'Listeners',
-//        ];
-//    }
 
 }

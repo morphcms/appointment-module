@@ -4,11 +4,9 @@ namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
 use Modules\Appointment\Events\MeetingApproved;
-use Modules\Appointment\Events\MeetingCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Modules\Appointment\Events\MeetingUpdated;
 
-class NotifyUsersIfMeetingCreated
+class NotifyUsersOfAMeetingUpdated
 {
     /**
      * Create the event listener.
@@ -23,14 +21,14 @@ class NotifyUsersIfMeetingCreated
     /**
      * Handle the event.
      *
-     * @param MeetingCreated $event
+     * @param MeetingUpdated $event
      * @return void
      */
-    public function handle(MeetingCreated $event): void
+    public function handle(MeetingUpdated $event): void
     {
         $event->request->user()->notify(
             NovaNotification::make()
-                ->message('Your meeting is created.')
+                ->message('Your meeting is rescheduled.')
                 ->type('info')
         );
     }
