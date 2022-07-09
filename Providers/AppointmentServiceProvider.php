@@ -3,8 +3,12 @@
 namespace Modules\Appointment\Providers;
 
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Modules\Appointment\Events\MeetingApproved;
+use Modules\Appointment\Listeners\NotifyUsersIfMeetingApproved;
 use Modules\Appointment\Nova\Resources\Meeting;
+use Modules\Appointment\Observers\MeetingObserver;
 
 class AppointmentServiceProvider extends ServiceProvider
 {
@@ -34,6 +38,13 @@ class AppointmentServiceProvider extends ServiceProvider
         \Nova::resources([
             Meeting::class,
         ]);
+
+//        Event::listen(
+//            MeetingApproved::class,
+//            [NotifyUsersIfMeetingApproved::class, 'handle']
+//        );
+
+        \Modules\Appointment\Models\Meeting::observe(MeetingObserver::class);
     }
 
     /**
@@ -115,4 +126,5 @@ class AppointmentServiceProvider extends ServiceProvider
         }
         return $paths;
     }
+
 }
