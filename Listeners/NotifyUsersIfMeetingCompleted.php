@@ -2,6 +2,8 @@
 
 namespace Modules\Appointment\Listeners;
 
+use Laravel\Nova\Notifications\NovaNotification;
+use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCompleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,8 +26,13 @@ class NotifyUsersIfMeetingCompleted
      * @param MeetingCompleted $event
      * @return void
      */
-    public function handle(MeetingCompleted $event)
+    public function handle(MeetingCompleted $event): void
     {
-        //
+        $event->request->user()->notify(
+            NovaNotification::make()
+                ->message('Your meeting is completed.')
+                ->type('info')
+        );
     }
+
 }

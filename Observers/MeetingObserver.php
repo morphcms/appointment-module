@@ -5,6 +5,9 @@ namespace Modules\Appointment\Observers;
 use Illuminate\Http\Request;
 use Modules\Appointment\Enum\MeetingStatus;
 use Modules\Appointment\Events\MeetingApproved;
+use Modules\Appointment\Events\MeetingCompleted;
+use Modules\Appointment\Events\MeetingRejected;
+use Modules\Appointment\Events\MeetingRescheduled;
 use Modules\Appointment\Models\Meeting;
 
 class MeetingObserver
@@ -38,6 +41,15 @@ class MeetingObserver
             switch ($meeting->status){
                 case MeetingStatus::Approved->value:
                     event(new MeetingApproved($this->request));
+                    break;
+                case MeetingStatus::Rejected->value:
+                    event(new MeetingRejected($this->request));
+                    break;
+                case MeetingStatus::Completed->value:
+                    event(new MeetingCompleted($this->request));
+                    break;
+                case MeetingStatus::Rescheduled->value:
+                    event(new MeetingRescheduled($this->request));
                     break;
                 default:
                     break;

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Nova\Notifications\NovaChannel;
 
-class MeetingReschedules
+class MeetingRescheduled
 {
     use SerializesModels;
 

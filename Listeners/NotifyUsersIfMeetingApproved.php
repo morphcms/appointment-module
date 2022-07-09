@@ -31,4 +31,5 @@ class NotifyUsersIfMeetingApproved
                 ->type('info')
         );
     }
+
 }

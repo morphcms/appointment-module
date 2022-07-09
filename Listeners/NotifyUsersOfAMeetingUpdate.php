@@ -3,6 +3,7 @@
 namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
+use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingUpdated;
 
 class NotifyUsersOfAMeetingUpdate
@@ -23,8 +24,13 @@ class NotifyUsersOfAMeetingUpdate
      * @param MeetingUpdated $event
      * @return void
      */
-    public function handle(MeetingUpdated $event)
+    public function handle(MeetingUpdated $event): void
     {
-
+        $event->request->user()->notify(
+            NovaNotification::make()
+                ->message('Your meeting is rescheduled.')
+                ->type('info')
+        );
     }
+
 }
