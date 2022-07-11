@@ -7,6 +7,7 @@ use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCompleted;
 use Modules\Appointment\Events\MeetingCreated;
 use Modules\Appointment\Events\MeetingRejected;
+use Modules\Appointment\Events\MeetingRescheduled;
 use Modules\Appointment\Events\MeetingUpdated;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingApproved;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingCompleted;
@@ -34,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
         MeetingRejected::class => [
             NotifyUsersIfMeetingRejected::class,
         ],
-        NotifyUsersIfMeetingRescheduled::class => [
+        MeetingRescheduled::class => [
             NotifyUsersIfMeetingRescheduled::class,
         ],
     ];

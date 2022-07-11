@@ -29,32 +29,15 @@ class MeetingObserver
         //
     }
 
-//    /**
-//     * Handle the Meeting "updated" event.
-//     *
-//     * @param Meeting $meeting
-//     * @return void
-//     */
+    /**
+     * Handle the Meeting "updated" event.
+     *
+     * @param Meeting $meeting
+     * @return void
+     */
     public function updated(Meeting $meeting): void
     {
-        if($meeting->isDirty('status')){
-            switch ($meeting->status){
-                case MeetingStatus::Approved->value:
-                    event(new MeetingApproved($this->request));
-                    break;
-                case MeetingStatus::Rejected->value:
-                    event(new MeetingRejected($this->request));
-                    break;
-                case MeetingStatus::Completed->value:
-                    event(new MeetingCompleted($this->request));
-                    break;
-                case MeetingStatus::Rescheduled->value:
-                    event(new MeetingRescheduled($this->request));
-                    break;
-                default:
-                    break;
-            }
-        }
+        $this->notifyMeetingStatus($meeting);
     }
 
 
@@ -66,15 +49,7 @@ class MeetingObserver
 //     */
 //    public function updating(Meeting $meeting): void
 //    {
-//        if($meeting->isDirty('status')){
-//            switch ($meeting->status){
-//                case MeetingStatus::Approved->value:
-//                    event(new MeetingApproved());
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
+//        $this->notifyMeetingStatus($meeting);
 //    }
 
     /**
@@ -108,5 +83,31 @@ class MeetingObserver
     public function forceDeleted(Meeting $meeting)
     {
         //
+    }
+
+    /**
+     * @param Meeting $meeting
+     * @return void
+     */
+    protected function notifyMeetingStatus(Meeting $meeting): void
+    {
+        if ($meeting->isDirty('status')) {
+            switch ($meeting->status) {
+                case MeetingStatus::Approved->value:
+                    event(new MeetingApproved($this->request));
+                    break;
+                case MeetingStatus::Rejected->value:
+                    event(new MeetingRejected($this->request));
+                    break;
+                case MeetingStatus::Completed->value:
+                    event(new MeetingCompleted($this->request));
+                    break;
+                case MeetingStatus::Rescheduled->value:
+                    event(new MeetingRescheduled($this->request));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
