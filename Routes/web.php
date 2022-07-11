@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('appointment')->group(function() {
-    Route::get('/', 'AppointmentController@index');
-});
+//Route::prefix('appointment')->group(function() {
+//    Route::get('/', 'AppointmentController@index');
+//});

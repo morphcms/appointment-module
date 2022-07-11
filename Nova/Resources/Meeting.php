@@ -23,7 +23,7 @@ class Meeting extends Resource
 
     public static $title = 'title';
 
-    public static $displayInNavigation = true;
+    public static $displayInNavigation = false;
 
     public static $search = [
         'id',
