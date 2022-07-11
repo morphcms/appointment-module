@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Appointment\Actions\CancelMeeting;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/appointment', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group(['prefix' => '/appointment'], function (){
+    Route::put('/cancel/{meeting:id}', [CancelMeeting::class, 'execute']);
 });

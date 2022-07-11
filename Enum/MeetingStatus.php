@@ -14,6 +14,7 @@ enum MeetingStatus: string
     case Rescheduled = 'rescheduled';
     case Pending = 'pending';
     case Completed = 'completed';
+    case Canceled = 'canceled';
 
     public static function getNovaBadgeColors(): array
     {
@@ -23,6 +24,7 @@ enum MeetingStatus: string
             MeetingStatus::Rescheduled->value => 'warning',
             MeetingStatus::Pending->value => 'info',
             MeetingStatus::Completed->value => 'success',
+            MeetingStatus::Canceled->value => 'danger',
         ];
     }
 }
