@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Modules\Appointment\Actions\CancelMeeting;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +12,9 @@ use Modules\Appointment\Actions\CancelMeeting;
 |
 */
 
-Route::middleware('auth:api')->get('/appointment', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::group(['prefix' => '/appointment'], function (){
-    Route::put('/cancel/{meeting:id}', [CancelMeeting::class, 'execute']);
-});
+Route::put('/meetings/{meeting:id}/cancel', [\Modules\Appointment\Actions\CancelMeeting::class, 'execute']);
+Route::get('/meetings', \Modules\Appointment\Http\Controllers\Meetings\IndexController::class);
+Route::get('/meetings/{meeting:id}', \Modules\Appointment\Http\Controllers\Meetings\ShowController::class);
+Route::post('/meetings', \Modules\Appointment\Http\Controllers\Meetings\StoreController::class);
+Route::put('/meetings/{meeting:id}', \Modules\Appointment\Http\Controllers\Meetings\UpdateController::class);
+Route::put('/meetings/{meeting:id}', [\Modules\Appointment\Actions\RescheduleMeeting::class, 'execute']);
