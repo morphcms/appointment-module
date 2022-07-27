@@ -2,7 +2,7 @@
 
 namespace Modules\Appointment\Events;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Nova\Notifications\NovaChannel;
 
@@ -15,7 +15,7 @@ class MeetingRejected
      *
      * @return void
      */
-    public function __construct(public Request $request)
+    public function __construct(public User $user)
     {
         //
     }

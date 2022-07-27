@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Modules\Appointment\Enum\MeetingStatus;
 use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCompleted;
+use Modules\Appointment\Events\MeetingCreated;
 use Modules\Appointment\Events\MeetingRejected;
 use Modules\Appointment\Events\MeetingRescheduled;
 use Modules\Appointment\Models\Meeting;
+use RTippin\Messenger\Actions\Threads\StoreGroupThread;
 
 class MeetingObserver
 {
@@ -26,7 +28,7 @@ class MeetingObserver
      */
     public function created(Meeting $meeting)
     {
-        //
+        event(new MeetingCreated($this->request->user()));
     }
 
     /**
@@ -41,16 +43,16 @@ class MeetingObserver
     }
 
 
-//    /**
-//     * Handle the Meeting "updating" event.
-//     *
-//     * @param Meeting $meeting
-//     * @return void
-//     */
-//    public function updating(Meeting $meeting): void
-//    {
+    /**
+     * Handle the Meeting "updating" event.
+     *
+     * @param Meeting $meeting
+     * @return void
+     */
+    public function updating(Meeting $meeting): void
+    {
 //        $this->notifyMeetingStatus($meeting);
-//    }
+    }
 
     /**
      * Handle the Meeting "deleted" event.
@@ -94,16 +96,16 @@ class MeetingObserver
         if ($meeting->isDirty('status')) {
             switch ($meeting->status) {
                 case MeetingStatus::Approved->value:
-                    event(new MeetingApproved($this->request));
+                    event(new MeetingApproved($this->request->user(), $meeting));
                     break;
                 case MeetingStatus::Rejected->value:
-                    event(new MeetingRejected($this->request));
+                    event(new MeetingRejected($this->request->user()));
                     break;
                 case MeetingStatus::Completed->value:
-                    event(new MeetingCompleted($this->request));
+                    event(new MeetingCompleted($this->request->user(), $meeting));
                     break;
                 case MeetingStatus::Rescheduled->value:
-                    event(new MeetingRescheduled($this->request));
+                    event(new MeetingRescheduled($this->request->user()));
                     break;
                 default:
                     break;

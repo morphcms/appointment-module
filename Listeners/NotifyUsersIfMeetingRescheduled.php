@@ -26,7 +26,7 @@ class NotifyUsersIfMeetingRescheduled
      */
     public function handle(MeetingRescheduled $event): void
     {
-        $event->request->user()->notify(
+        $event->user->notify(
             NovaNotification::make()
                 ->message('Your meeting is rescheduled.')
                 ->type('info')

@@ -25,7 +25,7 @@ class NotifyUsersIfMeetingApproved
      */
     public function handle(MeetingApproved $event): void
     {
-        $event->request->user()->notify(
+        $event->user->notify(
             NovaNotification::make()
                 ->message('Your meeting is approved.')
                 ->type('info')

@@ -3,7 +3,6 @@
 namespace Modules\Appointment\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
@@ -25,9 +24,8 @@ class AppointmentTool extends Tool
 
     public function menu(Request $request)
     {
-        return MenuSection::make('Appointments', [
-            MenuItem::resource(Meeting::class)->canSee(fn() => true),
-            MenuItem::resource(MeetingGuest::class)->canSee(fn() => true),
-        ])->icon('identification')->collapsable();
+        return MenuSection::resource(Meeting::class)
+            ->icon('identification')
+            ->canSee(fn() => true);
     }
 }

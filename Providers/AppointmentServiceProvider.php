@@ -2,9 +2,11 @@
 
 namespace Modules\Appointment\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Modules\Appointment\Console\CreateGroupChatCommand;
 use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingApproved;
 use Modules\Appointment\Nova\Resources\Meeting;
@@ -34,15 +36,17 @@ class AppointmentServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
+        $this->app->afterResolving(Schedule::class, function (Schedule $scheduler) {
+           $scheduler->command('appointment:create-chats')->daily();
+        });
+
+        $this->commands([
+            CreateGroupChatCommand::class,
+        ]);
 
         \Nova::resources([
             Meeting::class,
         ]);
-
-//        Event::listen(
-//            MeetingApproved::class,
-//            [NotifyUsersIfMeetingApproved::class, 'handle']
-//        );
 
         \Modules\Appointment\Models\Meeting::observe(MeetingObserver::class);
     }

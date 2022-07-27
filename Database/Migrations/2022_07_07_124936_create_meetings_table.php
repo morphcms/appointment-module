@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('status')->default(MeetingStatus::Pending->value);
             $table->string('title')->nullable();
             $table->string('uuid')->unique()->nullable();
+            $table->uuid('chat_id')->unique()->nullable();
             $table->foreignIdFor(User::class);
 
             $table->timestamps();

@@ -28,7 +28,7 @@ class NotifyUsersIfMeetingCompleted
      */
     public function handle(MeetingCompleted $event): void
     {
-        $event->request->user()->notify(
+        $event->user->notify(
             NovaNotification::make()
                 ->message('Your meeting is completed.')
                 ->type('info')

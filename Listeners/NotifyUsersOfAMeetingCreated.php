@@ -7,6 +7,7 @@ use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use RTippin\Messenger\Actions\Threads\StoreGroupThread;
 
 class NotifyUsersOfAMeetingCreated
 {
@@ -28,9 +29,9 @@ class NotifyUsersOfAMeetingCreated
      */
     public function handle(MeetingCreated $event): void
     {
-        $event->request->user()->notify(
+        $event->user->notify(
             NovaNotification::make()
-                ->message('Your meeting is created.')
+                ->message('Your meeting was created.')
                 ->type('info')
         );
     }

@@ -28,7 +28,7 @@ class NotifyUsersIfMeetingRejected
      */
     public function handle(MeetingRejected $event): void
     {
-        $event->request->user()->notify(
+        $event->user->notify(
             NovaNotification::make()
                 ->message('Your meeting is rejected.')
                 ->type('info')

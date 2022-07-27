@@ -31,21 +31,15 @@ class MeetingGuest extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Email')->rules([
-                'nullable',
-                'prohibited_unless:user_id,null',
-            ]),
-
-            DateTime::make('Accepted At'),
+            BelongsTo::make('Meeting', 'meeting', Meeting::class)
+                ->sortable()
+                ->filterable(),
 
             BelongsTo::make('User', 'user', User::class)
-                ->nullable()
-                ->rules([
-                    'nullable',
-                    'prohibited_unless:email,null',
-                ]),
+                ->sortable()
+                ->filterable(),
 
-            BelongsTo::make('Meeting', 'meeting', Meeting::class),
+            DateTime::make('Accepted At')->exceptOnForms(),
         ];
     }
 }

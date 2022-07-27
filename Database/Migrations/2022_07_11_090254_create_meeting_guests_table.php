@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable();
             $table->foreignIdFor(Meeting::class);
             $table->dateTime('accepted_at')->nullable();
-            $table->string('email')->nullable();
 
             $table->timestamps();
         });
