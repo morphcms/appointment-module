@@ -22,7 +22,7 @@ class MeetingResource extends JsonResource
             'notes' => $this->notes,
             'status' => $this->status,
             'title' => $this->title,
-            'user' => $this->whenLoaded('user', fn() => new UserResource($this->user)),
+            'user' => $this->whenLoaded('user', fn () => new UserResource($this->user)),
         ];
     }
 }

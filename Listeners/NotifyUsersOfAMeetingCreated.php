@@ -3,11 +3,7 @@
 namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
-use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use RTippin\Messenger\Actions\Threads\StoreGroupThread;
 
 class NotifyUsersOfAMeetingCreated
 {
@@ -24,7 +20,7 @@ class NotifyUsersOfAMeetingCreated
     /**
      * Handle the event.
      *
-     * @param MeetingCreated $event
+     * @param  MeetingCreated  $event
      * @return void
      */
     public function handle(MeetingCreated $event): void
@@ -35,5 +31,4 @@ class NotifyUsersOfAMeetingCreated
                 ->type('info')
         );
     }
-
 }

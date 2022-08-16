@@ -6,13 +6,11 @@ use App\Nova\User;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
 class MeetingGuest extends Resource
 {
-
     public static string $model = \Modules\Appointment\Models\MeetingGuest::class;
 
     public static $title = 'email';
@@ -24,7 +22,7 @@ class MeetingGuest extends Resource
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fields(NovaRequest $request): array
     {

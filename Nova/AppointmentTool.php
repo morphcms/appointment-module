@@ -11,7 +11,6 @@ use Modules\Appointment\Nova\Resources\MeetingGuest;
 
 class AppointmentTool extends Tool
 {
-
     protected static array $resources = [
         Meeting::class,
         MeetingGuest::class,
@@ -26,6 +25,6 @@ class AppointmentTool extends Tool
     {
         return MenuSection::resource(Meeting::class)
             ->icon('identification')
-            ->canSee(fn() => true);
+            ->canSee(fn () => true);
     }
 }

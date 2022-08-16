@@ -17,14 +17,14 @@ class CreateGroupChatWhenAMeetingWasApproved
      */
     public function __construct(public StoreGroupThread $storeGroupThread, public StoreManyParticipants $storeManyParticipants)
     {
-
     }
 
     /**
      * Handle the event.
      *
-     * @param MeetingApproved $event
+     * @param  MeetingApproved  $event
      * @return void
+     *
      * @throws Throwable
      */
     public function handle(MeetingApproved $event): void

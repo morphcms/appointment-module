@@ -3,24 +3,21 @@
 namespace Modules\Appointment\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Modules\Appointment\Console\CreateGroupChatCommand;
-use Modules\Appointment\Events\MeetingApproved;
-use Modules\Appointment\Listeners\NotifyUsersIfMeetingApproved;
 use Modules\Appointment\Nova\Resources\Meeting;
 use Modules\Appointment\Observers\MeetingObserver;
+use Wdelfuego\NovaCalendar\Interface\CalendarDataProviderInterface;
 
 class AppointmentServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Appointment';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'appointment';
 
@@ -37,7 +34,7 @@ class AppointmentServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         $this->app->afterResolving(Schedule::class, function (Schedule $scheduler) {
-           $scheduler->command('appointment:create-chats')->daily();
+            $scheduler->command('appointment:create-chats')->daily();
         });
 
         $this->commands([
@@ -60,6 +57,10 @@ class AppointmentServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
+
+        $this->app->bind(CalendarDataProviderInterface::class, function ($app) {
+            return new CalendarDataProvider();
+        });
     }
 
     /**
@@ -70,7 +71,7 @@ class AppointmentServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower.'.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
@@ -84,13 +85,13 @@ class AppointmentServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
+        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-module-views']);
+            $sourcePath => $viewPath,
+        ], ['views', $this->moduleNameLower.'-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -102,7 +103,7 @@ class AppointmentServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
+        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
@@ -125,11 +126,11 @@ class AppointmentServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
+                $paths[] = $path.'/modules/'.$this->moduleNameLower;
             }
         }
+
         return $paths;
     }
-
 }

@@ -35,7 +35,7 @@ class CalendarDataProvider extends MonthCalendar
         return [
 
             // Events without an ending timestamp will always be shown as single-day events:
-            User::class => 'created_at',
+            //            User::class => 'created_at',
 
             // Events with an ending timestamp can be multi-day events:
             Meeting::class => ['starts_at', 'ends_at'],
@@ -65,12 +65,12 @@ class CalendarDataProvider extends MonthCalendar
 
             'danger' => [
                 'background-color' => 'rgb(248 113 113)',
-//                'color' => 'rgb(127 29 29)',
+                //                'color' => 'rgb(127 29 29)',
             ],
 
             'info' => [
                 'background-color' => 'rgb(2 132 199)',
-//                'color' => 'rgb(12 74 110)',
+                //                'color' => 'rgb(12 74 110)',
             ],
 
             'success' => [
@@ -88,13 +88,13 @@ class CalendarDataProvider extends MonthCalendar
         if ($event->hasNovaResource(Meeting::class)) {
             if ($event->model()->hasStatus(MeetingStatus::Approved)) {
                 $event->addStyle('warning');
-            } else if ($event->model()->hasStatus(MeetingStatus::Rejected)) {
+            } elseif ($event->model()->hasStatus(MeetingStatus::Rejected)) {
                 $event->addStyle('danger');
-            } else if ($event->model()->hasStatus(MeetingStatus::Rescheduled)) {
+            } elseif ($event->model()->hasStatus(MeetingStatus::Rescheduled)) {
                 $event->addStyle('warning');
-            } else if ($event->model()->hasStatus(MeetingStatus::Pending)) {
+            } elseif ($event->model()->hasStatus(MeetingStatus::Pending)) {
                 $event->addStyle('info');
-            } else if ($event->model()->hasStatus(MeetingStatus::Completed)) {
+            } elseif ($event->model()->hasStatus(MeetingStatus::Completed)) {
                 $event->addStyle('success');
             }
         }

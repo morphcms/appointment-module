@@ -2,16 +2,12 @@
 
 namespace Modules\Appointment\Http\Controllers\Meetings;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
 use Modules\Appointment\Enum\MeetingStatus;
 use Modules\Appointment\Models\Meeting;
 use Modules\Appointment\Transformers\MeetingResource;
-use function PHPUnit\Framework\isNull;
 
 class StoreController extends Controller
 {
@@ -26,7 +22,7 @@ class StoreController extends Controller
             'user_id' => ['exists:users,id'],
         ]);
 
-        if(is_null($request->get('status'))){
+        if (is_null($request->get('status'))) {
             $validated['status'] = MeetingStatus::Pending->value;
         }
 

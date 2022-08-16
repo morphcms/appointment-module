@@ -3,10 +3,7 @@
 namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
-use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingCompleted;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NotifyUsersIfMeetingCompleted
 {
@@ -23,7 +20,7 @@ class NotifyUsersIfMeetingCompleted
     /**
      * Handle the event.
      *
-     * @param MeetingCompleted $event
+     * @param  MeetingCompleted  $event
      * @return void
      */
     public function handle(MeetingCompleted $event): void
@@ -34,5 +31,4 @@ class NotifyUsersIfMeetingCompleted
                 ->type('info')
         );
     }
-
 }

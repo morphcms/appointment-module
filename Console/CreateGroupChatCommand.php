@@ -8,7 +8,6 @@ use Modules\Appointment\Models\Meeting;
 use RTippin\Messenger\Actions\Threads\ArchiveThread;
 use RTippin\Messenger\Actions\Threads\StoreGroupThread;
 use RTippin\Messenger\Messenger;
-use RTippin\Messenger\Models\Thread;
 use Throwable;
 
 class CreateGroupChatCommand extends Command
@@ -41,6 +40,7 @@ class CreateGroupChatCommand extends Command
      * Execute the console command.
      *
      * @return void
+     *
      * @throws Throwable
      */
     public function handle(): void
@@ -64,7 +64,7 @@ class CreateGroupChatCommand extends Command
             $thread = $this->storeGroupThread->execute([
                 'subject' => $meeting->title,
                 'providers' => [
-                    ...$guests
+                    ...$guests,
                 ],
             ]);
 
@@ -75,13 +75,12 @@ class CreateGroupChatCommand extends Command
         }
     }
 
-
     /**
      * Get the console command arguments.
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [];
     }
@@ -91,7 +90,7 @@ class CreateGroupChatCommand extends Command
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [];
     }

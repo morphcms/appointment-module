@@ -21,7 +21,7 @@ class UpdateMeetingStatusWhenChatIsClosed
     /**
      * Handle the event.
      *
-     * @param ThreadArchivedEvent $event
+     * @param  ThreadArchivedEvent  $event
      * @return void
      */
     public function handle(ThreadArchivedEvent $event): void
@@ -33,5 +33,4 @@ class UpdateMeetingStatusWhenChatIsClosed
                 'chat_id' => null,
             ]);
     }
-
 }

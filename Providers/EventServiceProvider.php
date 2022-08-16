@@ -17,13 +17,18 @@ use Modules\Appointment\Listeners\NotifyUsersIfMeetingRejected;
 use Modules\Appointment\Listeners\NotifyUsersIfMeetingRescheduled;
 use Modules\Appointment\Listeners\NotifyUsersOfAMeetingCreated;
 use Modules\Appointment\Listeners\NotifyUsersOfAMeetingUpdated;
+use Modules\Appointment\Listeners\RegisterAppointmentNovaTool;
 use Modules\Appointment\Listeners\UpdateMeetingStatusWhenChatIsClosed;
+use Modules\Morphling\Events\BootModulesNovaTools;
+use RTippin\Messenger\Events\BroadcastFailedEvent;
 use RTippin\Messenger\Events\ThreadArchivedEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
-
     protected $listen = [
+        BootModulesNovaTools::class => [
+            RegisterAppointmentNovaTool::class,
+        ],
         MeetingCreated::class => [
             NotifyUsersOfAMeetingCreated::class,
         ],
@@ -46,7 +51,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ThreadArchivedEvent::class => [
             UpdateMeetingStatusWhenChatIsClosed::class,
-        ]
+        ],
+        BroadcastFailedEvent::class => [
+            BroadcastError::class,
+        ],
     ];
-
 }

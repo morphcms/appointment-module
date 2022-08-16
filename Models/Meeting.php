@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Modules\Appointment\Database\factories\MeetingFactory;
 use Modules\Appointment\Enum\MeetingStatus;
-
 
 /**
  * Modules\Appointment\Models\Meeting
@@ -28,6 +26,7 @@ use Modules\Appointment\Enum\MeetingStatus;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Appointment\Models\MeetingGuest[] $guests
  * @property-read int|null $guests_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting approved()
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting newQuery()
@@ -43,6 +42,7 @@ use Modules\Appointment\Enum\MeetingStatus;
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting whereUuid($value)
  * @mixin \Eloquent
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting status(\Modules\Appointment\Enum\MeetingStatus $status)
  * @method static \Illuminate\Database\Eloquent\Builder|Meeting whereChatId($value)
  */

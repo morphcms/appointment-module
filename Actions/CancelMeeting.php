@@ -2,7 +2,6 @@
 
 namespace Modules\Appointment\Actions;
 
-use App\Models\User;
 use Modules\Appointment\Enum\MeetingStatus;
 use Modules\Appointment\Events\MeetingCanceled;
 use Modules\Appointment\Models\Meeting;

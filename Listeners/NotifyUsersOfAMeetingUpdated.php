@@ -3,7 +3,6 @@
 namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
-use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingUpdated;
 
 class NotifyUsersOfAMeetingUpdated
@@ -21,7 +20,7 @@ class NotifyUsersOfAMeetingUpdated
     /**
      * Handle the event.
      *
-     * @param MeetingUpdated $event
+     * @param  MeetingUpdated  $event
      * @return void
      */
     public function handle(MeetingUpdated $event): void
@@ -32,5 +31,4 @@ class NotifyUsersOfAMeetingUpdated
                 ->type('info')
         );
     }
-
 }

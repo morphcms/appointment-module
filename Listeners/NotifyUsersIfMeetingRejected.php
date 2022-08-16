@@ -3,10 +3,7 @@
 namespace Modules\Appointment\Listeners;
 
 use Laravel\Nova\Notifications\NovaNotification;
-use Modules\Appointment\Events\MeetingApproved;
 use Modules\Appointment\Events\MeetingRejected;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NotifyUsersIfMeetingRejected
 {
@@ -23,7 +20,7 @@ class NotifyUsersIfMeetingRejected
     /**
      * Handle the event.
      *
-     * @param MeetingRejected $event
+     * @param  MeetingRejected  $event
      * @return void
      */
     public function handle(MeetingRejected $event): void
@@ -34,5 +31,4 @@ class NotifyUsersIfMeetingRejected
                 ->type('info')
         );
     }
-
 }

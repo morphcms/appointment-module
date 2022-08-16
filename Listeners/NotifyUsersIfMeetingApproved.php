@@ -14,13 +14,12 @@ class NotifyUsersIfMeetingApproved
      */
     public function __construct()
     {
-
     }
 
     /**
      * Handle the event.
      *
-     * @param MeetingApproved $event
+     * @param  MeetingApproved  $event
      * @return void
      */
     public function handle(MeetingApproved $event): void
@@ -31,5 +30,4 @@ class NotifyUsersIfMeetingApproved
                 ->type('info')
         );
     }
-
 }

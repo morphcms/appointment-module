@@ -22,15 +22,16 @@ class DeleteGroupIfMeetingStatusIsCompleted
     /**
      * Handle the event.
      *
-     * @param MeetingCompleted $event
+     * @param  MeetingCompleted  $event
      * @return void
+     *
      * @throws Exception
      */
     public function handle(MeetingCompleted $event): void
     {
         $thread = Thread::findOrNew($event->meeting->chat_id);
 
-        if($thread->exists()){
+        if ($thread->exists()) {
             $this->archiveThread
                 ->withoutEvents()
                 ->execute($thread);
@@ -40,5 +41,4 @@ class DeleteGroupIfMeetingStatusIsCompleted
             'chat_id' => null,
         ]);
     }
-
 }

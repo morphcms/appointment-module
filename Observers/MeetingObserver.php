@@ -10,20 +10,17 @@ use Modules\Appointment\Events\MeetingCreated;
 use Modules\Appointment\Events\MeetingRejected;
 use Modules\Appointment\Events\MeetingRescheduled;
 use Modules\Appointment\Models\Meeting;
-use RTippin\Messenger\Actions\Threads\StoreGroupThread;
 
 class MeetingObserver
 {
-
     public function __construct(public Request $request)
     {
-
     }
 
     /**
      * Handle the Meeting "created" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function created(Meeting $meeting)
@@ -34,7 +31,7 @@ class MeetingObserver
     /**
      * Handle the Meeting "updated" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function updated(Meeting $meeting): void
@@ -42,11 +39,10 @@ class MeetingObserver
         $this->notifyMeetingStatus($meeting);
     }
 
-
     /**
      * Handle the Meeting "updating" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function updating(Meeting $meeting): void
@@ -57,7 +53,7 @@ class MeetingObserver
     /**
      * Handle the Meeting "deleted" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function deleted(Meeting $meeting)
@@ -68,7 +64,7 @@ class MeetingObserver
     /**
      * Handle the Meeting "restored" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function restored(Meeting $meeting)
@@ -79,7 +75,7 @@ class MeetingObserver
     /**
      * Handle the Meeting "force deleted" event.
      *
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     public function forceDeleted(Meeting $meeting)
@@ -88,7 +84,7 @@ class MeetingObserver
     }
 
     /**
-     * @param Meeting $meeting
+     * @param  Meeting  $meeting
      * @return void
      */
     protected function notifyMeetingStatus(Meeting $meeting): void
