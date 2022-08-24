@@ -3,7 +3,6 @@
 namespace Modules\Appointment\Http\Controllers\Meetings;
 
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
@@ -17,7 +16,7 @@ class StoreController extends Controller
     {
         $validated = $request->validate([
             'starts_at' => ['required', 'after:yesterday', 'date'],
-            'number_of_minutes' => ['required', 'numeric', 'gt:0'],
+            'number_of_minutes' => ['required', 'numeric', 'gte:30'],
             'status' => ['nullable', Rule::in(MeetingStatus::values())],
             'notes' => ['nullable', 'string'],
             'title' => ['nullable', 'string'],
