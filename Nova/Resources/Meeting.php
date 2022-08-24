@@ -49,7 +49,7 @@ class Meeting extends Resource
             Stack::make('Dates', [
                 Line::make('Starts At', fn () => 'Starts At: '.$this->model()->starts_at->toDayDateTimeString()),
 
-                Line::make('Ends At', fn () => 'Ends At: '.$this->model()->ends_at->toDayDateTimeString()),
+                Line::make('Ends At', fn () => 'Ends At: '.$this->model()->ends_at?->toDayDateTimeString()),
             ]),
 
             DateTime::make('Starts At')

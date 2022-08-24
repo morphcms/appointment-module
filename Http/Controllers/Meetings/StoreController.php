@@ -2,6 +2,8 @@
 
 namespace Modules\Appointment\Http\Controllers\Meetings;
 
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
@@ -15,7 +17,7 @@ class StoreController extends Controller
     {
         $validated = $request->validate([
             'starts_at' => ['required', 'after:yesterday', 'date'],
-            'ends_at' => ['nullable', 'after_or_equal:starts_at', 'date'],
+            'number_of_minutes' => ['required', 'numeric', 'gt:0'],
             'status' => ['nullable', Rule::in(MeetingStatus::values())],
             'notes' => ['nullable', 'string'],
             'title' => ['nullable', 'string'],
@@ -26,7 +28,12 @@ class StoreController extends Controller
             $validated['status'] = MeetingStatus::Pending->value;
         }
 
-        $meeting = Meeting::create($validated);
+        $ends_at = new Carbon($validated['starts_at']);
+        $ends_at->addMinutes($validated['number_of_minutes'])->toDateTimeString();
+
+        $data = collect($validated)->except(['number_of_minutes'])->put('ends_at', $ends_at)->toArray();
+
+        $meeting = Meeting::create($data);
 
         return new MeetingResource($meeting->load('user'));
     }
