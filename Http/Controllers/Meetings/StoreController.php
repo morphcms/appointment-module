@@ -15,8 +15,8 @@ class StoreController extends Controller
     public function __invoke(Request $request): MeetingResource
     {
         $validated = $request->validate([
-            'starts_at' => ['required', 'after:yesterday', 'date'],
-            'number_of_minutes' => ['required', 'numeric', 'gte:30'],
+            'starts_at' => ['required', 'after:tomorrow', 'date'],
+            'number_of_minutes' => ['required', 'numeric', 'integer', 'gte:30'],
             'status' => ['nullable', Rule::in(MeetingStatus::values())],
             'notes' => ['nullable', 'string'],
             'title' => ['nullable', 'string'],
